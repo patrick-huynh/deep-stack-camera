@@ -36,32 +36,27 @@ if __name__=="__main__":
     config = ServerConfig("http://localhost:80")
     detection = Detection(config)
 
-    # Initiate Connection to iPhone IP Camera
-    # Make sure you CHANGE THE IP to the one displayed on your iPhone
+    # Initiate video capure to webcam
     capture = cv2.VideoCapture(1)
 
     while(True):
         # Capture the video frame
-        # by frame
         ret, frame = capture.read()
     
         if ret:
             # Detect the Frame with DeepStack using the Python SDK
             detections = detection.detectObject(frame,output=None)
-
+            print(detections)
             # Draw the detections on the frame
             frame = draw_detections(frame, detections)
 
-            #Display the frame and the detections
+            # Display the frame and the detections
             cv2.imshow('frame', frame)
         
-        # the 'q' button is set as the
-        # quitting button you may use any
-        # desired button of your choice
+        # Press 'q' to quit
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     
-    # After the loop release the cap detectionect
     capture.release()
     # Destroy all the windows
     cv2.destroyAllWindows()
